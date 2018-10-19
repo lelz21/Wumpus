@@ -27,6 +27,7 @@ tab.(1) <- alea();;
    let sop = string_of_int(agent.(0)) ^ " " ^ string_of_int(agent.(1)) ^ "\n" in
    print_string sop;
 *)
+
 let initGrille() =
   initTab agent;
   initTab wumpus;
