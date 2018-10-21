@@ -7,9 +7,11 @@ let tailleMax = 4;;
 
 let alea() = (Random.int tailleMax) + 1;;
 
-let initTab tab =
-tab.(0) <- alea();
-tab.(1) <- alea();;
+let isWumpus l c = wumpus.(0) = l && wumpus.(1) = c;;
+let isAgent l c = agent.(0) = l && agent.(1) = c;;
+let isTrou l c = trou.(0) = l && trou.(1) = c;;
+let isTresor l c = tresor.(0) = l && tresor.(1) = c;;
+
 
 let coin tab = (tab.(0) = 1 || tab.(0) = tailleMax) && (tab.(1) = 1 || tab.(1) = tailleMax);;
 
@@ -23,12 +25,11 @@ tab.(1) <- alea();;
 (* 2 éléments ne peuvent pas commencer au même endroit
    si l'agent commence dans un coin, le trou et le wumpus ne
    peuvent pas être placés juste à coté en même temps
-
-   let sop = string_of_int(agent.(0)) ^ " " ^ string_of_int(agent.(1)) ^ "\n" in
-   print_string sop;
 *)
 
 let initGrille() =
+  Random.self_init ();
+
   initTab agent;
   initTab wumpus;
 
@@ -59,7 +60,7 @@ let initGrille() =
 
 initGrille();;
 
-agent;;
-wumpus;;
-trou;;
-tresor;;
+print_string (string_of_int(wumpus.(0)) ^ " " ^ string_of_int(wumpus.(1)) ^ "\n");;
+print_string (string_of_int(agent.(0)) ^ " " ^ string_of_int(agent.(1)) ^ "\n");;
+print_string (string_of_int(trou.(0)) ^ " " ^ string_of_int(trou.(1)) ^ "\n");;
+print_string (string_of_int(tresor.(0)) ^ " " ^ string_of_int(tresor.(1)) ^ "\n");;
