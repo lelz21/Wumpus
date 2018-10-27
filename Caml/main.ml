@@ -80,6 +80,12 @@ let drawGrille ()=
     done;
   done;;
 
+let fin() = lastPos !precedents = (wumpus.(0), wumpus.(1))
+         || lastPos !precedents = (trou.(0), trou.(1))
+         || !win;;
+
+let shoot l c = isWumpus l c;;
+
 (*Le programme*)
 let main () =
     (*Initialisation de la fenetre*)
@@ -94,7 +100,8 @@ let main () =
     (*Dessine dans la fenetre*)
     drawGrille ();
     (*Gestion su clavier*)
-    while true do
+    while (not (fin())) do
+      drawGrille();
       (* On crée le lecteur d'évenements *)
       let e = wait_next_event [Key_pressed] in
       (* On cherche la case du personnage *)
@@ -104,20 +111,29 @@ let main () =
         let key = e.key in
         match key with
         (* Si c'est la touche z, le personnage monte d'une case s'il le peut *)
-        | 'z' -> if row < nbL   then precedents := !precedents @ [ (row+1) ; col ]
+        | 'w' -> if row < nbL   then precedents := !precedents @ [ (row+1) ; col ]
         (* Si c'est la touche s, le personnage descend d'une case s'il le peut *)
         | 's' -> if row > 1     then precedents := !precedents @ [ (row-1) ; col ]
         (* Si c'est la touche q, le personnage se déplace d'une case à gauche s'il le peut *)
-        | 'q' -> if col > 1     then precedents := !precedents @ [ row ; (col-1) ]
+        | 'a' -> if col > 1     then precedents := !precedents @ [ row ; (col-1) ]
         (* Si c'est la touche d, le personnage se déplace d'une case à droite s'il le peut *)
-        | 'd' -> if col < nbC   then precedents := !precedents @ [ row ; (col+1) ];
-
+        | 'd' -> if col < nbC   then precedents := !precedents @ [ row ; (col+1) ]
+        (**lancement de fleche*)
+        | 'W' -> if row < nbL   then if shoot (row+1) col then win := true
+        (* Si c'est la touche s, le personnage descend d'une case s'il le peut *)
+        | 'S' -> if row > 1     then if shoot (row-1) col then win := true
+        (* Si c'est la touche q, le personnage se déplace d'une case à gauche s'il le peut *)
+        | 'A' -> if col > 1     then if shoot row (col-1) then win := true
+        (* Si c'est la touche d, le personnage se déplace d'une case à droite s'il le peut *)
+        | 'D' -> if col < nbC   then if shoot row (col+1) then win := true
+        (*default*)
+        |  _  -> printAction "";
       end;
       (* On rafraichit l'image *)
       clear_graph();
-      drawGrille();
     done;
-    close_graph ();;
+    if !win then printAction "Vous avez gagne!"
+    else printAction "Vous avez perdu";;
 
 initGrille ();;
 main ();;

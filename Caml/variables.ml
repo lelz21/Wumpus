@@ -1,5 +1,6 @@
 (*Le tableau des précédents moves*)
 let precedents  = ref [2;2];;
+let win = ref false;;
 
 (*La taille de la fenetre, text_height sera ajouté à la hauteur*)
 let window_size = 400;;
