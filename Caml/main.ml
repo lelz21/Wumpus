@@ -56,7 +56,12 @@ let drawGrille ()=
           printAction "Vous sentez une brise"
         else
           printAction "Vous traversez la salle sans ne rien percevoir";
-
+  if isTresor row col && !b_arrow
+    then begin
+      incr arrows;
+      b_arrow := false;
+      printAction "vous avez trouve une fleche";
+    end;
 
   for i=0 to nbL-1 do
     for j=0 to nbC-1 do
@@ -82,9 +87,9 @@ let drawGrille ()=
 
 let fin() = lastPos !precedents = (wumpus.(0), wumpus.(1))
          || lastPos !precedents = (trou.(0), trou.(1))
-         || !win;;
+         || !win || !arrows = 0;;
 
-let shoot l c = isWumpus l c;;
+let shoot l c = if !arrows > 0 then isWumpus l c else false;;
 
 (*Le programme*)
 let main () =
@@ -119,13 +124,13 @@ let main () =
         (* Si c'est la touche d, le personnage se déplace d'une case à droite s'il le peut *)
         | 'd' -> if col < nbC   then precedents := !precedents @ [ row ; (col+1) ]
         (**lancement de fleche*)
-        | 'W' -> if row < nbL   then if shoot (row+1) col then win := true
+        | 'W' -> if row < nbL   then if shoot (row+1) col then win := true else decr arrows
         (* Si c'est la touche s, le personnage descend d'une case s'il le peut *)
-        | 'S' -> if row > 1     then if shoot (row-1) col then win := true
+        | 'S' -> if row > 1     then if shoot (row-1) col then win := true else decr arrows
         (* Si c'est la touche q, le personnage se déplace d'une case à gauche s'il le peut *)
-        | 'A' -> if col > 1     then if shoot row (col-1) then win := true
+        | 'A' -> if col > 1     then if shoot row (col-1) then win := true else decr arrows
         (* Si c'est la touche d, le personnage se déplace d'une case à droite s'il le peut *)
-        | 'D' -> if col < nbC   then if shoot row (col+1) then win := true
+        | 'D' -> if col < nbC   then if shoot row (col+1) then win := true else decr arrows
         (*default*)
         |  _  -> printAction "";
       end;
