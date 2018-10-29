@@ -1,5 +1,5 @@
 (*Le tableau des précédents moves*)
-let precedents  = ref [2;2];;
+let precedents  = ref [];;
 let win = ref false;;
 let arrows = ref 1;;
 let b_arrow = ref true;;

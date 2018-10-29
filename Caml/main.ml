@@ -11,6 +11,7 @@ let initGrille() =
   Random.self_init ();
 
   initTab agent;
+  precedents := !precedents @ [ agent.(0) ; agent.(1) ];
   initTab wumpus;
 
   while (distance agent wumpus) = 0 do
@@ -95,9 +96,9 @@ let shoot l c = if !arrows > 0 then isWumpus l c else false;;
 let main () =
     (*Initialisation de la fenetre*)
         (* Sous Linux *)
-    (* let graph_open = " " ^ string_of_int window_size ^ "x" ^ string_of_int (window_size+text_height) in *)
+    let graph_open = " " ^ string_of_int window_size ^ "x" ^ string_of_int (window_size+text_height) in
         (* Sous Windows *)
-    let graph_open = " " ^ string_of_int (window_size+15) ^ "x" ^ string_of_int (window_size+50+text_height) in
+    (* let graph_open = " " ^ string_of_int (window_size+15) ^ "x" ^ string_of_int (window_size+50+text_height) in *)
     open_graph graph_open;
     clear_graph();
     set_window_title "Wumpus";
@@ -116,20 +117,20 @@ let main () =
         let key = e.key in
         match key with
         (* Si c'est la touche z, le personnage monte d'une case s'il le peut *)
-        | 'w' -> if row < nbL   then precedents := !precedents @ [ (row+1) ; col ]
+        | 'z' -> if row < nbL   then precedents := !precedents @ [ (row+1) ; col ]
         (* Si c'est la touche s, le personnage descend d'une case s'il le peut *)
         | 's' -> if row > 1     then precedents := !precedents @ [ (row-1) ; col ]
         (* Si c'est la touche q, le personnage se déplace d'une case à gauche s'il le peut *)
-        | 'a' -> if col > 1     then precedents := !precedents @ [ row ; (col-1) ]
+        | 'q' -> if col > 1     then precedents := !precedents @ [ row ; (col-1) ]
         (* Si c'est la touche d, le personnage se déplace d'une case à droite s'il le peut *)
         | 'd' -> if col < nbC   then precedents := !precedents @ [ row ; (col+1) ]
         (**lancement de fleche*)
-        | 'W' -> if row < nbL   then if shoot (row+1) col then win := true else decr arrows
-        (* Si c'est la touche s, le personnage descend d'une case s'il le peut *)
+        | 'Z' -> if row < nbL   then if shoot (row+1) col then win := true else decr arrows
+        (* Si c'est la touche S, une flèche est tirée en bas *)
         | 'S' -> if row > 1     then if shoot (row-1) col then win := true else decr arrows
-        (* Si c'est la touche q, le personnage se déplace d'une case à gauche s'il le peut *)
-        | 'A' -> if col > 1     then if shoot row (col-1) then win := true else decr arrows
-        (* Si c'est la touche d, le personnage se déplace d'une case à droite s'il le peut *)
+        (* Si c'est la touche Q, une flèche est tirée à gauche*)
+        | 'Q' -> if col > 1     then if shoot row (col-1) then win := true else decr arrows
+        (* Si c'est la touche D, une flèche est tiré à droite *)
         | 'D' -> if col < nbC   then if shoot row (col+1) then win := true else decr arrows
         (*default*)
         |  _  -> printAction "";
