@@ -11,11 +11,11 @@ let printAction str =
   moveto 0 (window_size+text_height/2) ;
   draw_string str;;
 
-  let printTabs() =
+let printTabs() =
   for i = 0 to nbL-1 do
-  for j = 0 to nbC-1 do
-  print_int tabFinal.(i).(j);
-  done;
+    for j = 0 to nbC-1 do
+      print_int tabFinal.(i).(j);
+    done;
   done;;
 
 (*Cette fonction gère le monde où se trouve l'agent,chaque mouvement
@@ -50,7 +50,7 @@ let modifierTabs c x y=
           if (y != 3) then
           tabWumpus.(x+1).(y+1) <- tabWumpus.(x+1).(y+1) land 1;
       end;
-(*au contraire, on ne craint pas le trou si on sent seulement l'odeur*)
+      (*au contraire, on ne craint pas le trou si on sent seulement l'odeur*)
       (*remplissage de la table trou*)
       if (x != 0) then begin
       tabTrou.(x-1).(y) <- tabTrou.(x-1).(y) land 0;
@@ -74,8 +74,8 @@ let modifierTabs c x y=
           if (y != 3) then
           tabTrou.(x+1).(y+1) <- tabTrou.(x+1).(y+1) land 0;
       end;
-(*puisque on sent l'odeur aux alentour, cela signifie que le wumpus
-n'est pas sur les autres cases*)
+  (*puisque on sent l'odeur aux alentour, cela signifie que le wumpus
+  n'est pas sur les autres cases*)
     for i = 0 to nbL-1 do
       for j = 0 to nbC-1 do
             if( not((i=x-1 && j=y-1) || (i=x-1 && j=y) || (i=x-1 && j=y+1) ||
@@ -86,7 +86,7 @@ n'est pas sur les autres cases*)
     done;
 
   end
-(*Si on sent seulement la brise*)
+  (*Si on sent seulement la brise*)
   else if (c = 1) then begin
   (*remplissage de la table wumpus*)
   if (x != 0) then begin
@@ -146,8 +146,8 @@ n'est pas sur les autres cases*)
   done;
 
     end
-(*Si on sent les deux*)
-else if (c = 2) then begin
+  (*Si on sent les deux*)
+  else if (c = 2) then begin
   (*remplissage de la table wumpus*)
   if (x != 0) then begin
   tabWumpus.(x-1).(y) <- tabWumpus.(x-1).(y) land 1;
@@ -210,7 +210,7 @@ else if (c = 2) then begin
 
     end
 
-else if (c = 3) then begin
+    else if (c = 3) then begin
     (*remplissage de la table wumpus*)
     if (x != 0) then begin
     tabWumpus.(x-1).(y) <- tabWumpus.(x-1).(y) land 0;
