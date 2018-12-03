@@ -29,10 +29,6 @@ let isOdeur l c =  isWumpus (l-1) (c-1) || isWumpus (l-1) c || isWumpus (l-1) (c
                 || isWumpus l (c-1)     || isWumpus l (c+1)
                 || isWumpus (l+1) (c-1) || isWumpus (l+1) c || isWumpus (l+1) (c+1);;
 
-let isChoc l c = l <= 0 || l > nbL || c <= 0 || c > nbC;;
-
-
-
 let coin tab = (tab.(0) = 1 || tab.(0) = tailleMax) && (tab.(1) = 1 || tab.(1) = tailleMax);;
 
 (* distance entre 2 cases *)
@@ -41,30 +37,3 @@ let distance tab1 tab2 = abs(tab1.(0) - tab2.(0)) + abs(tab1.(1) - tab2.(1));;
 let initTab tab =
 tab.(0) <- alea();
 tab.(1) <- alea();;
-
-let fin() = lastPos !precedents = (wumpus.(0), wumpus.(1))
-         || lastPos !precedents = (trou.(0), trou.(1))
-         || !win || !loose || !arrows < 0 ||
-         (!arrows = 0 && !b_arrow = false);;
-
-let shoot l c = if !arrows > 0 then isWumpus l c else false;;
-
-
-let printArrows()=
-  moveto (window_size - 100) (window_size+text_height/2);
-  let str = "fleches : " ^ string_of_int !arrows in
-  draw_string str;;
-
-let printAction str1 str2 =
-  printArrows();
-  moveto 0 (window_size+text_height/2);
-  draw_string str1;
-  moveto 0 (window_size+text_height/2-text_height/4);
-  draw_string str2;;
-
-let reinitialize() =
-  precedents := [];
-  win := false;
-  loose := false;
-  arrows := 1;
-  b_arrow := true;;

@@ -1,7 +1,6 @@
 (*Le tableau des précédents moves*)
 let precedents  = ref [];;
 let win = ref false;;
-let loose = ref false;;
 let arrows = ref 1;;
 let b_arrow = ref true;;
 
@@ -30,3 +29,9 @@ let trou = Array.make 2 0;;
 let tresor = Array.make 2 0;;
 
 let tailleMax = 4;;
+(*variables IA*)
+let tabWumpus =  Array.make_matrix nbL nbC 1;;
+let tabTrou =  Array.make_matrix nbL nbC 1;;
+let tabFinal = Array.make_matrix nbL nbC 0;;
+let comptWumpus = Array.make_matrix nbL nbC 0;;
+let comptTrou = Array.make_matrix nbL nbC 0;;
