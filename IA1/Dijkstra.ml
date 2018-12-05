@@ -19,27 +19,24 @@ tabFinal.(2).(2) <- 1;;
 
 (* Le voisin en haut *)
 let voisinH matrix (x, y) =
-  if x != nbL-1 then (x-1, y)
+  if x != nbL-1 then (x+1, y)
   else (-1, -1);;
 (* Le voisin en bas *)
 let voisinB matrix (x, y) =
-  if y != 0 then (x, y-1)
+  if x != 0 then (x-1, y)
   else (-1, -1);;
 (* Le voisin à droite *)
 let voisinD matrix (x, y) =
-  if x != nbL-1 then (x+1, y)
+  if y != nbL-1 then (x, y+1)
   else (-1, -1);;
 (* Le voisin à gauche *)
 let voisinG matrix (x, y) =
-  if x != 0 then (x-1, y)
+  if y != 0 then (x, y-1)
   else (-1, -1);;
 
 
 let dijkstra matrix (x1, y1) (x2, y2) =
-  let (row, col) = voisinB matrix (1, 1) in
-  print_int row;
-  print_int col;
-;;
+  ;;
 
 
 
